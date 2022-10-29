@@ -1,13 +1,14 @@
-Testing - 1
+# to get started
 
-1st Browser Opened
-created id and logged in
+# download the code 
+- cd `folder-name`
 
-All working 
+- npm install
 
-2nd Browser Opened
-copied the first browser id and logged in
+# for client
+- npm run start
 
-Checking code are syncing or not
+# for server
+- npm run server:dev
 
-All is Working
+Dont forget to add .env
