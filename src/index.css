@@ -1,0 +1,51 @@
+
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #1c1e29;
+}
+
+
+.sidebar {
+    width: 35vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #282A36;
+    display: grid;
+    place-items: center;
+    animation-name: breath-animation;
+    animation-duration: 3s;
+  
+  }
+  @keyframes breath-animation {
+    0% { width: 0vw; }
+   
+    100% { width: 35vw;  }
+   }
+  
+  .sidebar .closeButton {
+    cursor: pointer;
+    position: absolute;
+    left: 1em;
+    top: 1em;
+  }
+
+  
+  .runButton{
+    padding: 1em;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(9, 230, 245);
+    left: 85%;
+    position: fixed;
+    top: 40px;
+    width: 100px;
+  }
