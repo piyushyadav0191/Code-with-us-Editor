@@ -7,6 +7,7 @@ const Sidebar = ({close}) => {
      </div>
  <h1 style={{color: 'white'}}>Compiled code will show here </h1>
 </aside>
+
 }
 
 

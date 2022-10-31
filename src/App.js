@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Home from './pages/Home';
 import EditorPage from './pages/EditorPage';
+import Navbar from './components/Navbar/Navbar'
+import Contact from './components/Contact/Contact';
+import MarkupEditor from './pages/MarkupEditor';
 
 function App() {
     return (
@@ -20,12 +23,15 @@ function App() {
                 ></Toaster>
             </div>
             <BrowserRouter>
+            <Navbar />
                 <Routes>
                     <Route path="/" element={<Home />}></Route>
                     <Route
                         path="/editor/:roomId"
                         element={<EditorPage />}
                     ></Route>
+                    <Route path='/markup-editor' element={<MarkupEditor />}  />
+                <Route path='/contact' element={<Contact />} />
                 </Routes>
             </BrowserRouter>
         </>

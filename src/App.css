@@ -141,3 +141,36 @@ footer a:hover {
     line-height: 1.6;
     padding-top: 20px;
 }
+
+
+
+.container {
+    display: flex;
+  }
+  .textarea {
+    width: 35vw;
+    height: 540px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    font-size: 18px;
+  }
+  .output {
+    font-size: 18px;
+    width: 35vw;
+    height: 540px;
+    background: gray;
+    border-radius: 10px;
+    margin-left: 20px;
+    padding: 10px;
+    color: #fff;
+    line-height: 3rem;
+  }
+
+.container1 {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      
+}
