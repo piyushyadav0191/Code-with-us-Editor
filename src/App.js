@@ -1,11 +1,11 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import Home from './pages/Home';
-import EditorPage from './pages/EditorPage';
+import Home from './pages/Main/Home';
+import EditorPage from './pages/Editor/EditorPage';
 import Navbar from './components/Navbar/Navbar'
 import Contact from './components/Contact/Contact';
-import MarkupEditor from './pages/MarkupEditor';
+import MarkupEditor from './pages/Markup/MarkupEditor';
 
 function App() {
     return (

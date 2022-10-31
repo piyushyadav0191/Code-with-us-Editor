@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import ACTIONS from '../Actions';
-import Client from '../components/Client';
-import Editor from '../components/Editor';
-import { initSocket } from '../socket';
-import {FiCircle} from 'react-icons/fi'
+import ACTIONS from '../../Actions'
+import Client from '../../components/Client/Client';
+import Editor from '../../components/Editor/Editor';
+import { initSocket } from '../../socket';
 import {
     useLocation,
     useNavigate,

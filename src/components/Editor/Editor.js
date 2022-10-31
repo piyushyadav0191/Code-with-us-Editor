@@ -5,7 +5,7 @@ import "codemirror/theme/dracula.css";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
-import ACTIONS from "../Actions";
+import ACTIONS from "../../Actions";
 import { GiSplitCross } from 'react-icons/gi'
 import { VscRunAll } from "react-icons/vsc";
 

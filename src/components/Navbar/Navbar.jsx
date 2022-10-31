@@ -9,8 +9,7 @@ import {
 	NavBtnLink,
 } from "./NavbarElements";
 import Contact from "../Contact/Contact";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from '../../pages/Home'
+
 const Navbar = () => {
     return (
         <>

@@ -1,13 +1,25 @@
+.font-face-gm {
+    font-family: "GoldmanBold";
+   }
+
+body {
+    font-family: "Piyush";
+    font-size: larger;
+}
+.source {
+    font-family: "Piyush" !important;
+}
 .homePageWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     color: #fff;
-    height: 100vh;
+    height: 100%;
 }
 
 .formWrapper {
     background: #282a36;
+    margin-top: 7rem;
     padding: 20px;
     border-radius: 10px;
     width: 400px;
@@ -148,28 +160,29 @@ footer a:hover {
     display: flex;
   }
   .textarea {
-    width: 35vw;
-    height: 540px;
+    width: 50vw;
+    height: 80vh;
     background: #f1f1f1;
     border-radius: 10px;
     outline: none;
     padding: 10px;
     font-size: 18px;
+    margin-top: 5rem;
   }
   .output {
     font-size: 18px;
-    width: 35vw;
-    height: 540px;
+    width: 45vw;
+    height: 80vh;
     background: gray;
     border-radius: 10px;
-    margin-left: 20px;
+    margin-left: 10px;
     padding: 10px;
     color: #fff;
     line-height: 3rem;
+    margin-top: 5rem;
   }
 
 .container1 {
-        min-height: 100vh;
         display: grid;
         place-items: center;
       

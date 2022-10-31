@@ -17,7 +17,6 @@ const MarkdownEditor = () => {
           className="textarea"
         ></textarea>
         <div className="output">
-					
           <ReactMarkdown>{markDown}</ReactMarkdown>
         </div>
       </div>

@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import { v4 as uuidV4 } from 'uuid';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
 
 const Home = () => {
     const navigate = useNavigate();
 
     const [roomId, setRoomId] = useState('');
     const [username, setUsername] = useState('');
+
+    const particlesInit = async (main) => {
+        await loadFull(main);
+      };
+    
+
     const createNewRoom = (e) => {
         e.preventDefault();
         const id = uuidV4();
@@ -35,6 +43,54 @@ const Home = () => {
         }
     };
     return (
+        <>
+         <Particles
+      id="tsparticles"
+      init={particlesInit}
+      options={{
+        "fullScreen": {
+            "enable": true,
+            "zIndex": 1
+        },
+        "particles": {
+            "number": {
+                "value": 5,
+                "density": {
+                    "enable": false,
+                    "value_area": 800
+                }
+            },
+            "color": {
+                "value": "#fff"
+            },
+            "shape": {
+                "type": "image",
+                "image": {
+                    "src": "https://raw.githubusercontent.com/piyushyadav0191/Mall-for-house/main/awe.png"
+                }
+            },
+            "size": {
+                "value": 50,
+                "random": false,
+                "anim": {
+                    "enable": false,
+                    "speed": 40,
+                    "size_min": 0.1,
+                    "sync": false
+                }
+            },
+            "move": {
+                "enable": true,
+                "speed": 4,
+                "direction": "none",
+                "random": false,
+                "straight": false,
+                "out_mode": "out",
+            }
+        },
+    }}
+    />
+ 
         <div className="homePageWrapper">
             <div className="formWrapper">
                 <h1 className="homePageLogo"> EDIT.ME EDITOR  </h1>
@@ -73,6 +129,7 @@ const Home = () => {
             </div>
             
         </div>
+        </>
     );
 };
 
