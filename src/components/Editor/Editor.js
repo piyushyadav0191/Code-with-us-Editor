@@ -2,30 +2,37 @@ import React, { useEffect, useRef, useState } from "react";
 import Codemirror from "codemirror";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/dracula.css";
-import "codemirror/mode/javascript/javascript";
+import "codemirror/mode/python/python";
 import "codemirror/addon/edit/closetag";
 import "codemirror/addon/edit/closebrackets";
 import ACTIONS from "../../Actions";
-import { GiSplitCross } from 'react-icons/gi'
 import { VscRunAll } from "react-icons/vsc";
+import Slider from "../Slider/Slider";
+import useSound from 'use-sound';
+import notify from '../../assets/sound.mp3';
+
 
 const Editor = ({ socketRef, roomId, onCodeChange }) => {
   // compiler code starts here
-
-
+  const [play] = useSound(notify);
   const [inputt, setInputt] = useState(localStorage.getItem("input") || ``);
-  console.log(inputt);
+  const [outputt, setOutputt] = useState({
+    result: "",
+    time: "",
+    memeory: "",
+    error: "",
+  });
   const [language_id, setLanguage_id] = useState(
     localStorage.getItem("language_Id") || 2
   );
   const [userInputt, setUserInputt] = useState(``);
-  
-  const [slider, setSlider] = useState(false)
-    const onClick =  () => {
-      setSlider(true)
-      submit()
-  
-    }
+
+  const [slider, setSlider] = useState(false);
+  const onClick = () => {
+    play()
+    setSlider(true);
+    submit();
+  };
 
   const userInput = (event) => {
     event.preventDefault();
@@ -39,80 +46,83 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
   };
 
   const submit = async (e) => {
+    const response = await fetch(
+      process.env.REACT_APP_RAPID_URL,
+      {
+        method: "POST",
+        headers: {
+          "x-rapidapi-host": process.env.REACT_APP_HOST_URL,
+          "x-rapidapi-key":
+            process.env.REACT_APP_RAPID_API_KEY, // Get yours for free at https://rapidapi.com/judge0-official/api/judge0-ce/
+          "content-type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({
+          source_code: inputt,
+          stdin: userInputt,
+          language_id: language_id,
+        }),
+      }
+    );
 
-      let outputText = document.getElementById("output");
-     
-      const response = await fetch(
-        "https://judge0-ce.p.rapidapi.com/submissions",
-        {
-          method: "POST",
+    const jsonResponse = await response.json();
+
+    let jsonGetSolution = {
+      status: { description: "Queue" },
+      stderr: null,
+      compile_output: null,
+    };
+
+    while (
+      jsonGetSolution.status.description !== "Accepted" &&
+      jsonGetSolution.stderr == null &&
+      jsonGetSolution.compile_output == null
+    ) {
+      // outputText.innerHTML = `Creating Submission ... \nSubmission Created ...\nChecking Submission Status\nstatus : ${jsonGetSolution.status.description}`;
+      if (jsonResponse.token) {
+        let url = `${process.env.REACT_APP_RAPID_URL}/${jsonResponse.token}?base64_encoded=true`;
+
+        const getSolution = await fetch(url, {
+          method: "GET",
           headers: {
-            "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+            "x-rapidapi-host": process.env.REACT_APP_HOST_URL,
             "x-rapidapi-key":
-              "50b92e009bmshe264941892b61b4p1504fejsn9d02876aa42e", // Get yours for free at https://rapidapi.com/judge0-official/api/judge0-ce/
+              process.env.REACT_APP_RAPID_API_KEY, // Get yours for free at https://rapidapi.com/judge0-official/api/judge0-ce/
             "content-type": "application/json",
-            accept: "application/json",
           },
-          body: JSON.stringify({
-            source_code: inputt,
-            stdin: userInputt,
-            language_id: language_id,
-          }),
-        }
-      );
-     
-      const jsonResponse = await response.json();
-  
-      let jsonGetSolution = {
-        status: { description: "Queue" },
-        stderr: null,
-        compile_output: null,
-      };
-  
-      while (
-        jsonGetSolution.status.description !== "Accepted" &&
-        jsonGetSolution.stderr == null &&
-        jsonGetSolution.compile_output == null
-      ) {
-        // outputText.innerHTML = `Creating Submission ... \nSubmission Created ...\nChecking Submission Status\nstatus : ${jsonGetSolution.status.description}`;
-        if (jsonResponse.token) {
-          let url = `https://judge0-ce.p.rapidapi.com/submissions/${jsonResponse.token}?base64_encoded=true`;
-  
-          const getSolution = await fetch(url, {
-            method: "GET",
-            headers: {
-              "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
-              "x-rapidapi-key":
-                "50b92e009bmshe264941892b61b4p1504fejsn9d02876aa42e", // Get yours for free at https://rapidapi.com/judge0-official/api/judge0-ce/
-              "content-type": "application/json",
-            },
-          });
-  
-          jsonGetSolution = await getSolution.json();
-        }
-      
+        });
+
+        jsonGetSolution = await getSolution.json();
       }
-      if (jsonGetSolution.stdout) {
-        const output = atob(jsonGetSolution.stdout);
-  
-        outputText.innerHTML = "";
-  
-        outputText.innerHTML += `Results :\n${output}\nExecution Time : ${jsonGetSolution.time} Secs\nMemory used : ${jsonGetSolution.memory} bytes`;
-      } else if (jsonGetSolution.stderr) {
-        const error = atob(jsonGetSolution.stderr);
-  
-        outputText.innerHTML = "";
-  
-        outputText.innerHTML += `\n Error :${error}`;
-      } else {
-        const compilation_error = atob(jsonGetSolution.compile_output);
-  
-        outputText.innerHTML = "";
-  
-        outputText.innerHTML += `\n Error :${compilation_error}`;
-      }
-    
-   
+    }
+
+    if (jsonGetSolution.stdout) {
+      const output = atob(jsonGetSolution.stdout);
+
+      setOutputt({
+        result: output,
+        time: jsonGetSolution.time,
+        memory: jsonGetSolution.memory,
+        error: "",
+      });
+    } else if (jsonGetSolution.stderr) {
+      const error = atob(jsonGetSolution.stderr);
+
+      setOutputt({
+        result: "",
+        time: "",
+        memory: "",
+        error: error,
+      });
+    } else {
+      const compilation_error = atob(jsonGetSolution.compile_output);
+      setOutputt({
+        result: "",
+        time: "",
+        memory: "",
+        error: compilation_error,
+      });
+    }
   };
   // compiler code ends here
 
@@ -123,7 +133,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
       editorRef.current = Codemirror.fromTextArea(
         document.getElementById("realtimeEditor"),
         {
-          mode: { name: "javascript", json: true },
+          mode: { name: "python" },
           theme: "dracula",
           autoCloseTags: true,
           autoCloseBrackets: true,
@@ -166,61 +176,21 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
 
   return (
     <>
-      <div className="row container-fluid">
-        <div className="col-6 ml-4 ">
-         
-          <textarea
-            required
-            readOnly
-            name="solution"
-            id="realtimeEditor"
-            className="source"
-            value={inputt}
-          ></textarea>
-
-          <button type="submit" onClick={onClick}> Run </button>
-
-          <label htmlFor="tags" className="mr-1">
-            <b className="heading">Language:</b>
-          </label>
-          <select
-            value={language_id}
-            onChange={language}
-            id="tags"
-            className="form-control form-inline mb-2 language"
-          >
-            <option value="54">C++</option>
-            <option value="50">C</option>
-            <option value="62">Java</option>
-            <option value="71">Python</option>
-          </select>
-        </div>
-        <div className="col-5">
-          <div>
-            <span className="badge badge-info heading my-2 ">
-              <i className="fas fa-exclamation fa-fw fa-md"></i> Output
-            </span>
-
-       {slider ? <aside className='sidebar' >
-              <div className='closeButton' >
-                <GiSplitCross color='#fff' size={50} />
-              </div>
-              <h1 style={{ color: 'white' }}>
-                  <div id="output"></div>
-                   </h1>
-            </aside> : <h1>bnd h bhai</h1> }
-                        
-          </div>
-        </div>
+      <textarea required readOnly name="solution" id="realtimeEditor" className="source" value={inputt}></textarea>
+      <VscRunAll size={50} className="runButton" type="submit" onClick={onClick} />
+      <div id="languageSelector" className="select-dropdown">
+        <select value={language_id} onChange={language} className="languageSelector">
+          <option value="54">C++</option>
+          <option value="50">C</option>
+          <option value="62">Java</option>
+          <option value="71">Python</option>
+        </select>
       </div>
-
-      <div className="mt-2 ml-5">
-        <span className="badge badge-primary heading my-2 ">
-          <i className="fas fa-user fa-fw fa-md"></i> User Input
-        </span>
-        <br />
-        <textarea id="input" onChange={userInput}></textarea>
-      </div>
+      {slider ? (
+        <Slider setSlider={setSlider} setOutput={setOutputt}  output={outputt} />
+      ) : (
+        null
+      )}
     </>
   );
 };

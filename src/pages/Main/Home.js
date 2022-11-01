@@ -54,23 +54,23 @@ const Home = () => {
         },
         "particles": {
             "number": {
-                "value": 5,
+                "value": 10,
                 "density": {
                     "enable": false,
                     "value_area": 800
                 }
             },
             "color": {
-                "value": "#fff"
+                "value": "#39FCFD"
             },
             "shape": {
-                "type": "image",
+                "type": "circle",
                 "image": {
                     "src": "https://raw.githubusercontent.com/piyushyadav0191/Mall-for-house/main/awe.png"
                 }
             },
             "size": {
-                "value": 50,
+                "value": 10,
                 "random": false,
                 "anim": {
                     "enable": false,
@@ -93,7 +93,6 @@ const Home = () => {
  
         <div className="homePageWrapper">
             <div className="formWrapper">
-                <h1 className="homePageLogo"> EDIT.ME EDITOR  </h1>
                 <h4 className="mainLabel">Paste invitation ROOM ID</h4>
                 <div className="inputGroup">
                     <input

@@ -1,7 +1,3 @@
-.font-face-gm {
-    font-family: "GoldmanBold";
-   }
-
 body {
     font-family: "Piyush";
     font-size: larger;
@@ -47,7 +43,7 @@ footer a {
 
 .homePageLogo {
     height: 80px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 
 .inputBox {
@@ -80,7 +76,7 @@ footer a {
 
 .joinBtn:hover,
 .leaveBtn:hover {
-    background: #2b824c;
+    background: #00a7ea;
 }
 
 .createInfo {
@@ -97,8 +93,8 @@ footer a {
 
 .createNewBtn:hover,
 footer a:hover {
-    color: #368654;
-    border-color: #368654;
+    color: #00a7ea;
+    border-color: #00a7ea;
 }
 
 .mainWrap {
@@ -112,7 +108,22 @@ footer a:hover {
     color: #fff;
     display: flex;
     flex-direction: column;
+    height: 95%;
 }
+
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
 .asideInner {
     flex: 1;
 }

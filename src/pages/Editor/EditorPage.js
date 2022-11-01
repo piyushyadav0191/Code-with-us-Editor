@@ -4,6 +4,7 @@ import ACTIONS from '../../Actions'
 import Client from '../../components/Client/Client';
 import Editor from '../../components/Editor/Editor';
 import { initSocket } from '../../socket';
+import {MdSubdirectoryArrowLeft} from 'react-icons/md'
 import {
     useLocation,
     useNavigate,
@@ -95,9 +96,6 @@ const EditorPage = () => {
         <div className="mainWrap">
             <div className="aside">
                 <div className="asideInner">
-                    <div className="logo">
-                    <h1 className="homePageLogo"> E.M D </h1>
-                    </div>
                     <h3>Connected</h3>
                     <div className="clientsList">
                         {clients.map((client) => (
@@ -108,6 +106,7 @@ const EditorPage = () => {
                         ))}
                     </div>
                 </div>
+                <h3 id='selectHeading'> Select your Language <MdSubdirectoryArrowLeft size={20}  /></h3>
                 <button className="btn copyBtn" onClick={copyRoomId}>
                     Copy ROOM ID
                 </button>

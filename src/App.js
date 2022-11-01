@@ -6,6 +6,7 @@ import EditorPage from './pages/Editor/EditorPage';
 import Navbar from './components/Navbar/Navbar'
 import Contact from './components/Contact/Contact';
 import MarkupEditor from './pages/Markup/MarkupEditor';
+import { TitleContext } from './context/TitleContext';
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
                 <Route path='/contact' element={<Contact />} />
                 </Routes>
             </BrowserRouter>
+           
         </>
     );
 }
