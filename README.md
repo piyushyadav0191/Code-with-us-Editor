@@ -54,10 +54,11 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    
+    <ul>
     <li><a href="#contributing">Contributing</a></li>
     
     <li><a href="#contact">Contact</a></li>
+</ul>
    
   </ol>
 </details>
